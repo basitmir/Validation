@@ -1,6 +1,7 @@
 $(function(){
     
 
+  fastfeedback();
     $("#form").submit(function(event){
         var email=$("#email").val();
         var password=$("#password").val();
@@ -11,30 +12,82 @@ $(function(){
         var state=$("#inputState").val();
         
 
-        validateCheck(terms,event);
-        validateEmail(email,event);
+       validateCheck(terms,event);
+       validateEmail(email,event);
         validatePassword(password,event);
-        validateTextArea(textArea,event);
+       validateTextArea(textArea,event);
         validateName(name,event);
-        validateNumber(phone,event);
-        validatestate(state,event);
+       validateNumber(phone,event);
+       var states=validatestate(state,event);
         
-        
+       if(validEmail(email)&&validName(name)&&validNumber(phone)&&validPassword(password)
+ &&validTextarea(textArea)&& states &&terms){
+    alert("We will get back to you a.s.a.p");
+   }else{
+    alert("Please fill out all the details correctly");
+   }
     });
   
 
 }); 
+
+
+function fastfeedback(){
+
+    $("#email").blur(function(event){
+      var email=$(this).val();
+        validateEmail(email,event);
+    });
+
+    $("#password").blur(function(event){
+        var password= $(this).val();
+        validatePassword(password,event);
+    });
+
+    $("#textArea").blur(function(event){
+        var textArea= $(this).val();
+        validateTextArea(textArea,event);
+    });
+
+    $("#terms").change(function(event){
+        var terms= $(this).val();
+        validateCheck(terms,event);
+    });
+
+   
+
+    $("#name").blur(function(event){
+         
+        var name= $(this).val();
+        validateName(name,event);
+
+
+    });
+
+    $("#phone").blur(function(event){
+        var phone= $(this).val();
+        validateNumber(phone,event);
+    });
+
+    $("#inputState").blur(function(event){
+        var state= $(this).val();
+        validatestate(state,event);
+    });
+    
+}//fast fun close
 
 function validatestate(state,event){
     if(state=="Choose..."){
         $("#inputState").addClass("is-invalid");
         $(".selected").text("Please enter the valid state*");
         event.preventDefault();
-        $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
+        // $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
     }
     else{
         $("#inputState").removeClass("is-invalid").addClass("is-valid");
      $(".selected").text("");
+      return true;
+     
     
     }
 }//function close
@@ -47,7 +100,7 @@ function validatestate(state,event){
         $("#email").addClass("is-invalid");
         $("#email").next().text("Please enter the valid email*");
         event.preventDefault();
-        $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
+        // $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
     }
     else{
         $("#email").removeClass("is-invalid").addClass("is-valid");
@@ -62,7 +115,7 @@ function validatePassword(password,event){
         $("#password").addClass("is-invalid");
         $("#password").next().text("Please enter at least 8 Characters*");
         event.preventDefault();
-        $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
+        // $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
 
     }
     else{
@@ -78,7 +131,7 @@ function validatePassword(password,event){
         $("#terms").addClass("is-invalid");
           $("#validateCheck").text("Please check the terms and conditions*");
           event.preventDefault();
-          $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
+        //   $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
 
       }
       else{
@@ -94,7 +147,7 @@ function validatePassword(password,event){
            $("#textArea").addClass("is-invalid");
            $("#textArea").next().text("Please enter valid Message*");
            event.preventDefault();
-           $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
+        //    $(".msg").text("*Please fill out all the details correctly*").css("text-align","center");
        }
        else{
         $("#textArea").removeClass("is-invalid").addClass("is-valid");
